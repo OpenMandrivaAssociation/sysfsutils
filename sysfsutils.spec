@@ -42,6 +42,7 @@ Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
+Provides:	%{lib_name_orig}%{lib_major}-devel = %{version}-%{release}
 
 %description -n	%{lib_name}-devel
 This package contains the headers that programmers will need to develop
@@ -52,6 +53,7 @@ Summary:	Static library for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{lib_name} = %{version} %{lib_name}-devel = %{version} 
 Provides:	%{lib_name_orig}-static-devel = %{version}-%{release}
+Provides:	%{lib_name_orig}%{lib_major}-static-devel = %{version}-%{release}
 
 %description -n	%{lib_name}-static-devel
 This package contains the static library that programmers will need to develop
@@ -101,5 +103,3 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_libdir}/libsysfs.a
 %{_libdir}/libsysfs.la
-
-
