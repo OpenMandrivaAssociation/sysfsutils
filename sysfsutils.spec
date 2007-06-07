@@ -5,7 +5,7 @@
 
 Name: 		sysfsutils
 Version: 	2.1.0
-Release: 	%mkrel 2
+Release: 	%mkrel 3
 URL:		http://linux-diag.sourceforge.net/
 Source0: 	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License: 	GPL
