@@ -2,6 +2,8 @@
 %define lib_name_orig lib%{fname}
 %define lib_major 2
 %define lib_name %mklibname %{fname} %{lib_major}
+%define develname %mklibname %{fname} -d
+%define staticdevelname %mklibname %{fname} -d -s
 
 Name: 		sysfsutils
 Version: 	2.1.0
@@ -37,25 +39,27 @@ Provides:	%{lib_name_orig} = %{version}-%{release}
 This package contains the library needed to run programs dynamically
 linked with %{name}.
 
-%package -n	%{lib_name}-devel
+%package -n	%develname
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{lib_name_orig}%{lib_major}-devel = %{version}-%{release}
+Obsoletes:  %mklibname %{fname} 2 -d
 
-%description -n	%{lib_name}-devel
+%description -n	%develname
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%package -n	%{lib_name}-static-devel
+%package -n	%staticdevelname
 Summary:	Static library for developing programs that will use %{name}
 Group:		Development/C
-Requires:	%{lib_name} = %{version} %{lib_name}-devel = %{version} 
+Requires:	%{lib_name} = %{version} %develname = %{version} 
 Provides:	%{lib_name_orig}-static-devel = %{version}-%{release}
 Provides:	%{lib_name_orig}%{lib_major}-static-devel = %{version}-%{release}
+Obsoletes:  %mklibname %{fname} 2 -d -s
 
-%description -n	%{lib_name}-static-devel
+%description -n	%staticdevelname
 This package contains the static library that programmers will need to develop
 applications which will use %{name}.
 
@@ -92,14 +96,14 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(-,root,root)
 %{_libdir}/libsysfs.so.%{lib_major}*
 
-%files -n %{lib_name}-devel
+%files -n %develname
 %defattr(-,root,root)
 %doc docs/libsysfs.txt
 %{_libdir}/libsysfs.so
 %{_includedir}/sysfs/libsysfs.h
 %{_includedir}/sysfs/dlist.h
 
-%files -n %{lib_name}-static-devel
+%files -n %staticdevelname
 %defattr(-,root,root)
 %{_libdir}/libsysfs.a
 %{_libdir}/libsysfs.la
