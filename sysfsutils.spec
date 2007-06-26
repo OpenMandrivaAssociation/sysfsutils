@@ -5,7 +5,7 @@
 
 Name: 		sysfsutils
 Version: 	2.1.0
-Release: 	%mkrel 3
+Release: 	%mkrel 4
 URL:		http://linux-diag.sourceforge.net/
 Source0: 	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License: 	GPL
@@ -90,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -n %{lib_name}
 %defattr(-,root,root)
-%{_libdir}/libsysfs.so.*
+%{_libdir}/libsysfs.so.%{lib_major}*
 
 %files -n %{lib_name}-devel
 %defattr(-,root,root)
