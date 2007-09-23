@@ -7,7 +7,7 @@
 
 Name: 		sysfsutils
 Version: 	2.1.0
-Release: 	%mkrel 5
+Release: 	%mkrel 6
 URL:		http://linux-diag.sourceforge.net/
 Source0: 	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License: 	GPL
@@ -46,6 +46,7 @@ Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{lib_name_orig}%{lib_major}-devel = %{version}-%{release}
 Obsoletes:  %mklibname %{fname} 2 -d
+Conflicts:	%{_lib}sysfs1-devel < 2.1.0
 
 %description -n	%develname
 This package contains the headers that programmers will need to develop
