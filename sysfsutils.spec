@@ -25,7 +25,6 @@ and their attributes.
 
 This package currently includes:
 
-- libsysfs: a library for accessing system devices.
 - lsbus: a small application to query system bus information.
 - systool: an application to view system device information by bus, class,
         and topology.
@@ -37,7 +36,7 @@ Provides:	%{lib_name_orig} = %{version}-%{release}
 
 %description -n	%{lib_name}
 This package contains the library needed to run programs dynamically
-linked with %{name}.
+linked with %{name}. The libsysfs library enables to access system devices.
 
 %package -n	%develname
 Summary:	Headers for developing programs that will use %{name}
