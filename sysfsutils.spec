@@ -7,7 +7,7 @@
 
 Name: 		sysfsutils
 Version: 	2.1.0
-Release: 	%mkrel 7
+Release: 	%mkrel 8
 URL:		http://linux-diag.sourceforge.net/
 Source0: 	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License: 	GPL
@@ -44,6 +44,8 @@ Group:		Development/C
 Requires:	%{lib_name} = %{version}
 Provides:	%{lib_name_orig}-devel = %{version}-%{release}
 Provides:	%{lib_name_orig}%{lib_major}-devel = %{version}-%{release}
+# for Turbolinux compatibility:
+Provides:	sysfsutils-devel = %{version}-%{release}
 Obsoletes:  %mklibname %{fname} 2 -d
 Conflicts:	%{_lib}sysfs1-devel < 2.1.0
 
