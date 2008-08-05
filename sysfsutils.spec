@@ -7,7 +7,7 @@
 
 Name: 		sysfsutils
 Version: 	2.1.0
-Release: 	%manbo_mkrel 8
+Release: 	%manbo_mkrel 9
 URL:		http://linux-diag.sourceforge.net/
 Source0: 	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License: 	GPL
