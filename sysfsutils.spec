@@ -16,7 +16,7 @@ Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildConflicts:	%{libname} <= %{version}-%{release}
+BuildConflicts:	%{lib_name} <= %{version}-%{release}
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
