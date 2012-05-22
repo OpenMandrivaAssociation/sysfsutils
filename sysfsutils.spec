@@ -4,6 +4,9 @@
 %define	devname	%mklibname %{fname} -d
 %define	static	%mklibname %{fname} -d -s
 
+%bcond_without	diet
+%bcond_without	uclibc
+
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
@@ -70,6 +73,22 @@ applications which will use %{name}.
 %patch1 -p1
 
 %build
+%if %{with diet}
+mkdir diet
+pushd diet
+CC="diet gcc" ../configure --enable-static --disable-shared
+%make V=1 LD="diet ld" CC="diet cc" CFLAGS="-Os -g"
+popd
+%endif
+
+%if %{with uclibc}
+mkdir uclibc
+pushd uclibc
+CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" ../configure --enable-static --disable-shared
+make V=1
+popd
+%endif
+
 %configure2_5x --libdir=/%{_lib}
 %make
 
