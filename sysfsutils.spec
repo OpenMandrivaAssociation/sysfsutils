@@ -98,6 +98,9 @@ popd
 %install
 %makeinstall_std
 
+install -d %{buildroot}%{_libdir}
+mv %{buildroot}/%{_lib}/*.a %{buildroot}%{_libdir}
+
 %if %{with diet}
 install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
@@ -127,7 +130,7 @@ install -m644 ./uclibc/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/uclibc/%{_
 %{_includedir}/sysfs/dlist.h
 
 %files -n %{static}
-/%{_lib}/libsysfs.a
+%{_libdir}/libsysfs.a
 %if %{with diet}
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
