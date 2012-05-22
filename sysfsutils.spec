@@ -14,7 +14,6 @@ License:	GPLv2
 Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
-BuildConflicts:	%{libname} <= %{version}-%{release}
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
