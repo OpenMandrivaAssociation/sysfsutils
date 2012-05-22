@@ -17,6 +17,7 @@ License:	GPLv2
 Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
+Patch2:		sysfsutils-2.1.0-srcdir-include.patch
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
@@ -71,6 +72,8 @@ applications which will use %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1 -b .inc~
+autoreconf -fi -Im4
 
 %build
 %if %{with diet}
