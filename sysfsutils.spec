@@ -1,22 +1,21 @@
 %define fname sysfs
-%define lib_name_orig lib%{fname}
-%define lib_major 2
-%define lib_name %mklibname %{fname} %{lib_major}
-%define develname %mklibname %{fname} -d
-%define staticdevelname %mklibname %{fname} -d -s
+%define	libname_orig lib%{fname}
+%define	major	2
+%define	libname	%mklibname %{fname} %{major}
+%define	devname	%mklibname %{fname} -d
+%define	static	%mklibname %{fname} -d -s
 
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	%manbo_mkrel 12
+Release:	13
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPL
 Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildConflicts:	%{lib_name} <= %{version}-%{release}
+BuildConflicts:	%{libname} <= %{version}-%{release}
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
@@ -32,39 +31,39 @@ This package currently includes:
 - systool: an application to view system device information by bus, class,
         and topology.
 
-%package -n %{lib_name}
+%package -n	%{libname}
 Summary:	Main library for %{name}
 Group:		System/Libraries
-Provides:	%{lib_name_orig} = %{version}-%{release}
+Provides:	%{libname_orig} = %{version}-%{release}
 
-%description -n	%{lib_name}
+%description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:	Headers for developing programs that will use %{name}
 Group:		Development/C
-Requires:	%{lib_name} = %{version}-%{release}
-Provides:	%{lib_name_orig}-devel = %{version}-%{release}
-Provides:	%{lib_name_orig}%{lib_major}-devel = %{version}-%{release}
+Requires:	%{libname} = %{version}-%{release}
+Provides:	%{libname_orig}-devel = %{version}-%{release}
+Provides:	%{libname_orig}%{major}-devel = %{version}-%{release}
 # for Turbolinux compatibility:
 Provides:	sysfsutils-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{fname} 2 -d
 Conflicts:	%{_lib}sysfs1-devel < 2.1.0
 
-%description -n	%{develname}
+%description -n	%{devname}
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%package -n %{staticdevelname}
+%package -n	%{static}
 Summary:	Static library for developing programs that will use %{name}
 Group:		Development/C
-Requires:	%{lib_name} = %{version} %develname = %{version} 
-Provides:	%{lib_name_orig}-static-devel = %{version}-%{release}
-Provides:	%{lib_name_orig}%{lib_major}-static-devel = %{version}-%{release}
+Requires:	%{libname} = %{version} %devname = %{version} 
+Provides:	%{libname_orig}-static-devel = %{version}-%{release}
+Provides:	%{libname_orig}%{major}-static-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{fname} 2 -d -s
 
-%description -n	%{staticdevelname}
+%description -n	%{static}
 This package contains the static library that programmers will need to develop
 applications which will use %{name}.
 
@@ -79,21 +78,9 @@ applications which will use %{name}.
 %make
 
 %install
-rm -rf %{buildroot}
-%{makeinstall_std}
-
-%clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post -n %{lib_name} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun -n %{lib_name} -p /sbin/ldconfig
-%endif
+%makeinstall_std
 
 %files
-%defattr(-,root,root)
 %doc AUTHORS README NEWS
 %{_bindir}/systool
 %{_bindir}/dlist_test
@@ -103,18 +90,14 @@ rm -rf %{buildroot}
 #%{_bindir}/testlibsysfs
 %{_mandir}/man1/*
 
-%files -n %{lib_name}
-%defattr(-,root,root)
-/%{_lib}/libsysfs.so.%{lib_major}*
+%files -n %{libname}
+/%{_lib}/libsysfs.so.%{major}*
 
-%files -n %{develname}
-%defattr(-,root,root)
+%files -n %{devname}
 %doc docs/libsysfs.txt
 /%{_lib}/libsysfs.so
 %{_includedir}/sysfs/libsysfs.h
 %{_includedir}/sysfs/dlist.h
 
-%files -n %{staticdevelname}
-%defattr(-,root,root)
+%files -n %{static}
 /%{_lib}/libsysfs.a
-/%{_lib}/libsysfs.la
