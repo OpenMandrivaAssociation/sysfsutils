@@ -98,7 +98,7 @@ popd
 %install
 %makeinstall_std
 
-%if %{with dietlibc}
+%if %{with diet}
 install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 
