@@ -1,5 +1,4 @@
-%define fname sysfs
-%define	libname_orig lib%{fname}
+%define	fname	sysfs
 %define	major	2
 %define	libname	%mklibname %{fname} %{major}
 %define	devname	%mklibname %{fname} -d
@@ -35,7 +34,6 @@ This package currently includes:
 Summary:	Main library for %{name}
 License:	LGPLv2.1
 Group:		System/Libraries
-Provides:	%{libname_orig} = %{version}-%{release}
 
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
@@ -46,8 +44,6 @@ Summary:	Headers for developing programs that will use %{name}
 License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{libname_orig}-devel = %{version}-%{release}
-Provides:	%{libname_orig}%{major}-devel = %{version}-%{release}
 # for Turbolinux compatibility:
 Provides:	sysfsutils-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{fname} 2 -d
@@ -62,8 +58,6 @@ Summary:	Static library for developing programs that will use %{name}
 License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version} %devname = %{version} 
-Provides:	%{libname_orig}-static-devel = %{version}-%{release}
-Provides:	%{libname_orig}%{major}-static-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{fname} 2 -d -s
 
 %description -n	%{static}
