@@ -128,7 +128,7 @@ install -m644 ./uclibc/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/uclibc/%{_
 
 %files -n %{static}
 /%{_lib}/libsysfs.a
-%if %{with dietlibc}
+%if %{with diet}
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 %if %{with uclibc}
