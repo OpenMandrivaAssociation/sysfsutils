@@ -11,7 +11,7 @@ Version:	2.1.0
 Release:	13
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
-License:	GPL
+License:	GPLv2
 Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
@@ -33,6 +33,7 @@ This package currently includes:
 
 %package -n	%{libname}
 Summary:	Main library for %{name}
+License:	LGPLv2.1
 Group:		System/Libraries
 Provides:	%{libname_orig} = %{version}-%{release}
 
@@ -42,6 +43,7 @@ linked with %{name}. The libsysfs library enables to access system devices.
 
 %package -n	%{devname}
 Summary:	Headers for developing programs that will use %{name}
+License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{libname_orig}-devel = %{version}-%{release}
@@ -57,6 +59,7 @@ applications which will use %{name}.
 
 %package -n	%{static}
 Summary:	Static library for developing programs that will use %{name}
+License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version} %devname = %{version} 
 Provides:	%{libname_orig}-static-devel = %{version}-%{release}
