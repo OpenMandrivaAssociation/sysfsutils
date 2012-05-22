@@ -98,6 +98,15 @@ popd
 %install
 %makeinstall_std
 
+%if %{with dietlibc}
+install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
+%endif
+
+%if %{with uclibc}
+install -m644 ./uclibc/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/uclibc/%{_libdir}/libsysfs.a
+%endif
+
+
 %files
 %doc AUTHORS README NEWS
 %{_bindir}/systool
@@ -119,3 +128,9 @@ popd
 
 %files -n %{static}
 /%{_lib}/libsysfs.a
+%if %{with dietlibc}
+%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
+%endif
+%if %{with uclibc}
+%{_prefix}/uclibc/%{_libdir}/libsysfs.a
+%endif
