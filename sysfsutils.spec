@@ -18,6 +18,12 @@ Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
 Patch2:		sysfsutils-2.1.0-srcdir-include.patch
+%if %{with diet}
+BuildRequires:	dietlibc-devel
+%endif
+%if %{with uclibc}
+BuildRequires:	uClibc-devel >= 0.9.33.2-3
+%endif
 
 %description
 This package's purpose is to provide a set of utilities for interfacing
