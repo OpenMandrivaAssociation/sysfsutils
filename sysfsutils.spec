@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	13
+Release:	14
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -68,6 +68,7 @@ License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version} %devname = %{version} 
 Obsoletes:	%mklibname %{fname} 2 -d -s
+Provides:	sysfsutils-static-devel = %{version}-%{release}
 
 %description -n	%{static}
 This package contains the static library that programmers will need to develop
