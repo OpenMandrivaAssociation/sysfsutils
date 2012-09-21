@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	15
+Release:	16
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -45,6 +45,15 @@ License:	LGPLv2.1
 Group:		System/Libraries
 
 %description -n	%{libname}
+This package contains the library needed to run programs dynamically
+linked with %{name}. The libsysfs library enables to access system devices.
+
+%package -n	uclibc-%{libname}
+Summary:	uClibc linked library for %{name}
+License:	LGPLv2.1
+Group:		System/Libraries
+
+%description -n	uclibc-%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
 
@@ -84,41 +93,54 @@ autoreconf -fi -Im4
 
 %build
 %if %{with diet}
-mkdir diet
+mkdir -p diet
 pushd diet
-CC="diet gcc" ../configure --enable-static --disable-shared
+CONFIGURE_TOP=.. \
+CC="diet gcc" \
+%configure2_5x	--enable-static \
+		--disable-shared
 %make V=1 LD="diet ld" CC="diet cc" CFLAGS="-Os -g"
 popd
 %endif
 
 %if %{with uclibc}
-mkdir uclibc
+mkdir -p uclibc
 pushd uclibc
-CC="%{uclibc_cc}" CFLAGS="%{uclibc_cflags}" ../configure --enable-static --disable-shared
-make V=1
+CONFIGURE_TOP=.. \
+CC="%{uclibc_cc}" \
+CFLAGS="%{uclibc_cflags}" \
+LDFLAGS="%{ldflags} -Wl,-O2" \
+%configure2_5x	--enable-static \
+		--enable-shared \
+		--libdir=%{uclibc_root}/%{_lib}
+%make V=1 -C lib
 popd
 %endif
 
-%configure2_5x --libdir=/%{_lib}
+mkdir -p glibc
+pushd glibc
+CONFIGURE_TOP=.. \
+%configure2_5x	--libdir=/%{_lib}
 %make
+popd
 
 %install
-%makeinstall_std
+%makeinstall_std -C glibc
 
 install -d %{buildroot}%{_libdir}
 mv %{buildroot}/%{_lib}/*.{so,a} %{buildroot}%{_libdir}
-pushd %{buildroot}%{_libdir}
-ln -sf ../../%{_lib}/libsysfs.so.%{major}.* libsysfs.so
-popd
+ln -rsf %{buildroot}%/{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsysfs.so
 
 %if %{with diet}
 install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 
 %if %{with uclibc}
-install -m644 ./uclibc/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/uclibc/%{_libdir}/libsysfs.a
+%makeinstall_std -C uclibc/lib
+install -d %{buildroot}%{uclibc_root}%{_libdir}
+mv %{buildroot}%{uclibc_root}/%{_lib}/*.{so,a} %{buildroot}%{uclibc_root}%{_libdir}
+ln -rsf %{buildroot}%{uclibc_root}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libsysfs.so
 %endif
-
 
 %files
 %doc AUTHORS README NEWS
@@ -133,11 +155,19 @@ install -m644 ./uclibc/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/uclibc/%{_
 %files -n %{libname}
 /%{_lib}/libsysfs.so.%{major}*
 
+%if %{with uclibc}
+%files -n uclibc-%{libname}
+%{uclibc_root}/%{_lib}/libsysfs.so.%{major}*
+%endif
+
 %files -n %{devname}
 %doc docs/libsysfs.txt
 %{_libdir}/libsysfs.so
 %{_includedir}/sysfs/libsysfs.h
 %{_includedir}/sysfs/dlist.h
+%if %{with uclibc}
+%{uclibc_root}%{_libdir}/libsysfs.so
+%endif
 
 %files -n %{static}
 %{_libdir}/libsysfs.a
@@ -145,5 +175,5 @@ install -m644 ./uclibc/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/uclibc/%{_
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 %if %{with uclibc}
-%{_prefix}/uclibc/%{_libdir}/libsysfs.a
+%{uclibc_root}%{_libdir}/libsysfs.a
 %endif
