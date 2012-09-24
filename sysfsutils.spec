@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	16
+Release:	17
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -62,6 +62,9 @@ Summary:	Headers for developing programs that will use %{name}
 License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
+%if %{with uclibc}
+Requires:	uclibc-%{libname} = %{version}-%{release}
+%endif
 # for Turbolinux compatibility:
 Provides:	sysfsutils-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{fname} 2 -d
