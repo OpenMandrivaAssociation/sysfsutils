@@ -114,8 +114,6 @@ pushd uclibc
 		--enable-static \
 		--enable-shared \
 		--libdir=%{uclibc_root}/%{_lib}
-# n
-#sed -e 's#CC="gcc"#CC="%{uclibc_cc}"#g' -i libtool
 %make V=1
 popd
 %endif
