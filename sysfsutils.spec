@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	18
+Release:	19
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -95,34 +95,33 @@ applications which will use %{name}.
 autoreconf -fi -Im4
 
 %build
+CONFIGURE_TOP=$PWD
 %if %{with diet}
 mkdir -p diet
 pushd diet
-CONFIGURE_TOP=.. \
-CC="diet gcc" \
-%configure2_5x	--enable-static \
+%configure2_5x	CC="diet gcc" \
+		--enable-static \
 		--disable-shared
-%make V=1 LD="diet ld" CC="diet cc" CFLAGS="-Os -g"
+%make V=1 LD="diet ld" CFLAGS="-Os -g"
 popd
 %endif
 
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
-CONFIGURE_TOP=.. \
-CC="%{uclibc_cc}" \
-CFLAGS="%{uclibc_cflags}" \
-LDFLAGS="%{ldflags} -Wl,-O2" \
-%configure2_5x	--enable-static \
+%configure2_5x	CC="%{uclibc_cc}" \
+		CFLAGS="%{uclibc_cflags}" \
+		--enable-static \
 		--enable-shared \
 		--libdir=%{uclibc_root}/%{_lib}
-%make V=1 -C lib
+# n
+#sed -e 's#CC="gcc"#CC="%{uclibc_cc}"#g' -i libtool
+%make V=1
 popd
 %endif
 
 mkdir -p glibc
 pushd glibc
-CONFIGURE_TOP=.. \
 %configure2_5x	--libdir=/%{_lib}
 %make
 popd
