@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	19
+Release:	20
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -129,7 +129,7 @@ popd
 
 install -d %{buildroot}%{_libdir}
 mv %{buildroot}/%{_lib}/*.{so,a} %{buildroot}%{_libdir}
-ln -rsf %{buildroot}%/{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsysfs.so
+ln -rsf %{buildroot}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsysfs.so
 
 %if %{with diet}
 install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
