@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	20
+Release:	21
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -39,7 +39,7 @@ This package currently includes:
 - systool: an application to view system device information by bus, class,
         and topology.
 
-%package -n	%{libname}
+%package -n %{libname}
 Summary:	Main library for %{name}
 License:	LGPLv2.1
 Group:		System/Libraries
@@ -48,7 +48,7 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
 
-%package -n	uclibc-%{libname}
+%package -n uclibc-%{libname}
 Summary:	uClibc linked library for %{name}
 License:	LGPLv2.1
 Group:		System/Libraries
@@ -57,7 +57,7 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
 
-%package -n	%{devname}
+%package -n %{devname}
 Summary:	Headers for developing programs that will use %{name}
 License:	LGPLv2.1
 Group:		Development/C
@@ -74,11 +74,12 @@ Conflicts:	%{_lib}sysfs1-devel < 2.1.0
 This package contains the headers that programmers will need to develop
 applications which will use %{name}.
 
-%package -n	%{static}
+%package -n %{static}
 Summary:	Static library for developing programs that will use %{name}
 License:	LGPLv2.1
 Group:		Development/C
-Requires:	%{libname} = %{version} %devname = %{version} 
+Requires:	%{libname} = %{version}
+Requires:	%{devname} = %{version}
 Obsoletes:	%mklibname %{fname} 2 -d -s
 Provides:	sysfsutils-static-devel = %{version}-%{release}
 
