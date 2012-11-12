@@ -1,0 +1,51 @@
+--- sysfsutils-2.1.0/cmd/Makefile.am.inc~	2005-11-25 15:06:05.000000000 +0100
++++ sysfsutils-2.1.0/cmd/Makefile.am	2012-05-22 19:34:59.076631533 +0200
+@@ -1,6 +1,6 @@
+ bin_PROGRAMS = systool 
+ systool_SOURCES = systool.c names.c names.h
+-INCLUDES = -I../include
++INCLUDES = -I$(srcdir)/../include
+ LDADD = ../lib/libsysfs.la
+ EXTRA_CFLAGS = @EXTRA_CFLAGS@
+ AM_CFLAGS = -Wall -W -Wstrict-prototypes $(EXTRA_CFLAGS)
+--- sysfsutils-2.1.0/lib/Makefile.am.inc~	2006-08-07 07:08:01.000000000 +0200
++++ sysfsutils-2.1.0/lib/Makefile.am	2012-05-22 19:34:59.076631533 +0200
+@@ -1,7 +1,7 @@
+ lib_LTLIBRARIES = libsysfs.la
+ libsysfs_la_SOURCES = sysfs_utils.c sysfs_attr.c sysfs_class.c dlist.c \
+       sysfs_device.c sysfs_driver.c sysfs_bus.c sysfs_module.c sysfs.h
+-INCLUDES = -I../include
++INCLUDES = -I$(srcdir)/../include
+ libsysfs_la_LDFLAGS = -version-info 2:1:0
+ EXTRA_CFLAGS = @EXTRA_CLFAGS@
+ libsysfs_la_CFLAGS = -Wall -W -Wstrict-prototypes $(EXTRA_CLFAGS)
+--- sysfsutils-2.1.0/test/create-test.inc~	2012-05-22 19:35:14.204726992 +0200
++++ sysfsutils-2.1.0/test/create-test	2012-05-22 19:35:16.000738323 +0200
+@@ -2,7 +2,7 @@
+ 
+ rm -f test.h
+ 
+-conf_file=./libsysfs.conf
++conf_file=$(dirname $0)/libsysfs.conf
+ 
+ . $conf_file
+ 
+--- sysfsutils-2.1.0/test/Makefile.am.inc~	2006-08-23 09:37:02.000000000 +0200
++++ sysfsutils-2.1.0/test/Makefile.am	2012-05-22 19:34:59.076631533 +0200
+@@ -2,14 +2,14 @@ bin_PROGRAMS = dlist_test get_device get
+ BUILT_SOURCES = test.h
+ CLEANFILES = test.h
+ test.h:
+-	./create-test
++	$(srcdir)/create-test
+ get_device_SOURCES = get_device.c
+ get_driver_SOURCES = get_driver.c
+ get_module_SOURCES = get_module.c
+ testlibsysfs_SOURCES = test.c test_attr.c test_bus.c test_class.c \
+ 		       test_device.c test_driver.c test_module.c test_utils.c \
+ 		       testout.c test-defs.h libsysfs.conf create-test
+-INCLUDES = -I../include
++INCLUDES = -I$(srcdir)/../include
+ LDADD = ../lib/libsysfs.la
+ EXTRA_CFLAGS = @EXTRA_CLFAGS@
+ AM_CFLAGS = -Wall -W -Wstrict-prototypes $(EXTRA_CLFAGS)
