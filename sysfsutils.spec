@@ -10,7 +10,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	20
+Release:	21
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
@@ -18,6 +18,7 @@ Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
 Patch2:		sysfsutils-2.1.0-srcdir-include.patch
+Patch3:		sysfsutils-automake-1.13.patch
 %if %{with diet}
 BuildRequires:	dietlibc-devel
 %endif
@@ -89,9 +90,7 @@ applications which will use %{name}.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1 -b .inc~
+%apply_patches
 autoreconf -fi -Im4
 
 %build

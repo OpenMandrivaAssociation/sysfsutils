@@ -1,0 +1,11 @@
+--- sysfsutils-2.1.0/configure.ac.bero	2013-01-16 02:56:36.862874865 +0100
++++ sysfsutils-2.1.0/configure.ac	2013-01-16 02:56:40.780829204 +0100
+@@ -2,7 +2,7 @@
+ AC_INIT(sysfsutils, 2.1.0, linux-diag-devel@lists.sourceforge.net)
+ AM_INIT_AUTOMAKE
+ AC_CONFIG_SRCDIR([config.h.in])
+-AM_CONFIG_HEADER([config.h])
++AC_CONFIG_HEADERS([config.h])
+ 
+ # Checks for KLIBC support (should be before AC_PROG_LIBTOOL and AC_PROG_CC)
+ AC_CHECK_KLIBC
