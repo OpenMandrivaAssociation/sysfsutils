@@ -119,7 +119,8 @@ popd
 
 mkdir -p glibc
 pushd glibc
-%configure2_5x	--libdir=/%{_lib}
+%configure2_5x	--libdir=/%{_lib} \
+		--enable-static
 %make
 popd
 
