@@ -4,7 +4,7 @@
 %define	devname	%mklibname %{fname} -d
 %define	static	%mklibname %{fname} -d -s
 
-%bcond_without	diet
+%bcond_without	dietlibc
 %bcond_without	uclibc
 
 Summary:	Utility suite to enjoy sysfs
