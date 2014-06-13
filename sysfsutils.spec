@@ -4,13 +4,13 @@
 %define	devname	%mklibname %{fname} -d
 %define	static	%mklibname %{fname} -d -s
 
-%bcond_without	dietlibc
+%bcond_without	diet
 %bcond_without	uclibc
 
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	29
+Release:	31
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 License:	GPLv2
