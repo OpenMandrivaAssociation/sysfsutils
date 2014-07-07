@@ -95,7 +95,7 @@ autoreconf -fi -Im4
 
 %build
 CONFIGURE_TOP=$PWD
-%if %{with diet}
+%if %{with dietlibc}
 mkdir -p diet
 pushd diet
 %configure2_5x	CC="diet gcc" \
