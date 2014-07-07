@@ -98,7 +98,7 @@ CONFIGURE_TOP=$PWD
 %if %{with dietlibc}
 mkdir -p diet
 pushd diet
-%configure2_5x	CC="diet gcc" \
+%configure	CC="diet gcc" \
 		--enable-static \
 		--disable-shared
 %make V=1 LD="diet ld" CFLAGS="-Os -g"
@@ -108,7 +108,7 @@ popd
 %if %{with uclibc}
 mkdir -p uclibc
 pushd uclibc
-%configure2_5x	CC="%{uclibc_cc}" \
+%configure	CC="%{uclibc_cc}" \
 		CFLAGS="%{uclibc_cflags}" \
 		--enable-static \
 		--enable-shared \
@@ -119,7 +119,7 @@ popd
 
 mkdir -p glibc
 pushd glibc
-%configure2_5x	--libdir=/%{_lib} \
+%configure	--libdir=/%{_lib} \
 		--enable-static
 %make
 popd
@@ -131,7 +131,7 @@ install -d %{buildroot}%{_libdir}
 mv %{buildroot}/%{_lib}/*.{so,a} %{buildroot}%{_libdir}
 ln -rsf %{buildroot}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsysfs.so
 
-%if %{with diet}
+%if %{with dietlibc}
 install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 
@@ -171,7 +171,7 @@ ln -rsf %{buildroot}%{uclibc_root}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{
 
 %files -n %{static}
 %{_libdir}/libsysfs.a
-%if %{with diet}
+%if %{with dietlibc}
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 %if %{with uclibc}
