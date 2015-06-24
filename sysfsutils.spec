@@ -1,5 +1,5 @@
-%define	fname	sysfs
-%define	major	2
+%define	fname sysfs
+%define	major 2
 %define	libname	%mklibname %{fname} %{major}
 %define	devname	%mklibname %{fname} -d
 %define	static	%mklibname %{fname} -d -s
@@ -10,9 +10,10 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	34
+Release:	35
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
+Source1:	%{name}.rpmlintrc
 License:	GPLv2
 Group:		System/Kernel and hardware
 Patch0:		sysfsutils-2.0.0-class-dup.patch
@@ -49,6 +50,7 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
 
+%if %{with uclibc}
 %package -n	uclibc-%{libname}
 Summary:	uClibc linked library for %{name}
 License:	LGPLv2.1
@@ -58,14 +60,25 @@ Group:		System/Libraries
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
 
+%package -n	uclibc-%{devname}
+Summary:	Headers for developing programs that will use %{name}
+License:	LGPLv2.1
+Group:		Development/C
+Requires:	%{devname} = %{EVRD}
+Requires:	uclibc-%{libname} = %{EVRD}
+Provides:	uclibc-sysfsutils-devel = %{EVRD}
+Conflicts:	%{devname} < 2.1.0-35
+
+%description -n	uclibc-%{devname}
+This package contains the headers that programmers will need to develop
+applications which will use %{name}.
+%endif
+
 %package -n	%{devname}
 Summary:	Headers for developing programs that will use %{name}
 License:	LGPLv2.1
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-%if %{with uclibc}
-Requires:	uclibc-%{libname} = %{version}-%{release}
-%endif
 # for Turbolinux compatibility:
 Provides:	sysfsutils-devel = %{version}-%{release}
 Obsoletes:	%mklibname %{fname} 2 -d
@@ -158,6 +171,10 @@ ln -rsf %{buildroot}%{uclibc_root}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{
 %if %{with uclibc}
 %files -n uclibc-%{libname}
 %{uclibc_root}/%{_lib}/libsysfs.so.%{major}*
+
+%files -n uclibc-%{devname}
+%{uclibc_root}%{_libdir}/libsysfs.so
+%{uclibc_root}%{_libdir}/libsysfs.a
 %endif
 
 %files -n %{devname}
@@ -165,15 +182,9 @@ ln -rsf %{buildroot}%{uclibc_root}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{
 %{_libdir}/libsysfs.so
 %{_includedir}/sysfs/libsysfs.h
 %{_includedir}/sysfs/dlist.h
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libsysfs.so
-%endif
 
 %files -n %{static}
 %{_libdir}/libsysfs.a
 %if %{with dietlibc}
 %{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
-%endif
-%if %{with uclibc}
-%{uclibc_root}%{_libdir}/libsysfs.a
 %endif
