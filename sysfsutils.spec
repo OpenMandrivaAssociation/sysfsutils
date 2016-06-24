@@ -5,12 +5,11 @@
 %define	static	%mklibname %{fname} -d -s
 
 %bcond_without	dietlibc
-%bcond_with	uclibc
 
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	37
+Release:	38
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 Source1:	%{name}.rpmlintrc
@@ -22,9 +21,6 @@ Patch2:		sysfsutils-2.1.0-srcdir-include.patch
 Patch3:		sysfsutils-automake-1.13.patch
 %if %{with dietlibc}
 BuildRequires:	dietlibc-devel
-%endif
-%if %{with uclibc}
-BuildRequires:	uClibc-devel >= 0.9.33.2-9
 %endif
 
 %description
@@ -49,30 +45,6 @@ Group:		System/Libraries
 %description -n	%{libname}
 This package contains the library needed to run programs dynamically
 linked with %{name}. The libsysfs library enables to access system devices.
-
-%if %{with uclibc}
-%package -n	uclibc-%{libname}
-Summary:	uClibc linked library for %{name}
-License:	LGPLv2.1
-Group:		System/Libraries
-
-%description -n	uclibc-%{libname}
-This package contains the library needed to run programs dynamically
-linked with %{name}. The libsysfs library enables to access system devices.
-
-%package -n	uclibc-%{devname}
-Summary:	Headers for developing programs that will use %{name}
-License:	LGPLv2.1
-Group:		Development/C
-Requires:	%{devname} = %{EVRD}
-Requires:	uclibc-%{libname} = %{EVRD}
-Provides:	uclibc-sysfsutils-devel = %{EVRD}
-Conflicts:	%{devname} < 2.1.0-35
-
-%description -n	uclibc-%{devname}
-This package contains the headers that programmers will need to develop
-applications which will use %{name}.
-%endif
 
 %package -n	%{devname}
 Summary:	Headers for developing programs that will use %{name}
@@ -118,22 +90,10 @@ pushd diet
 popd
 %endif
 
-%if %{with uclibc}
-mkdir -p uclibc
-pushd uclibc
-%configure	CC="%{uclibc_cc}" \
-		CFLAGS="%{uclibc_cflags}" \
-		--enable-static \
-		--enable-shared \
-		--libdir=%{uclibc_root}/%{_lib}
-%make V=1
-popd
-%endif
-
 mkdir -p glibc
 pushd glibc
-%configure	--libdir=/%{_lib} \
-		--enable-static
+%configure --libdir=/%{_lib} \
+	--enable-static
 %make
 popd
 
@@ -148,13 +108,6 @@ ln -rsf %{buildroot}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsy
 install -m644 ./diet/lib/.libs/libsysfs.a -D %{buildroot}%{_prefix}/lib/dietlibc/lib-%{_arch}/libsysfs.a
 %endif
 
-%if %{with uclibc}
-%makeinstall_std -C uclibc/lib
-install -d %{buildroot}%{uclibc_root}%{_libdir}
-mv %{buildroot}%{uclibc_root}/%{_lib}/*.{so,a} %{buildroot}%{uclibc_root}%{_libdir}
-ln -rsf %{buildroot}%{uclibc_root}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{uclibc_root}%{_libdir}/libsysfs.so
-%endif
-
 %files
 %doc AUTHORS README NEWS
 %{_bindir}/systool
@@ -167,15 +120,6 @@ ln -rsf %{buildroot}%{uclibc_root}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{
 
 %files -n %{libname}
 /%{_lib}/libsysfs.so.%{major}*
-
-%if %{with uclibc}
-%files -n uclibc-%{libname}
-%{uclibc_root}/%{_lib}/libsysfs.so.%{major}*
-
-%files -n uclibc-%{devname}
-%{uclibc_root}%{_libdir}/libsysfs.so
-%{uclibc_root}%{_libdir}/libsysfs.a
-%endif
 
 %files -n %{devname}
 %doc docs/libsysfs.txt
