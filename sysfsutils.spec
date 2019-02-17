@@ -4,7 +4,12 @@
 %define	devname	%mklibname %{fname} -d
 %define	static	%mklibname %{fname} -d -s
 
+%ifarch %{aarch64}
+# No dietlibc on aarch64 (yet)
+%bcond_with	dietlibc
+%else
 %bcond_without	dietlibc
+%endif
 
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
