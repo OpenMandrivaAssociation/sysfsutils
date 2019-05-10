@@ -4,7 +4,7 @@
 %define	devname	%mklibname %{fname} -d
 %define	static	%mklibname %{fname} -d -s
 
-%ifarch %{aarch64}
+%ifarch %{aarch64} %{riscv}
 # No dietlibc on aarch64 (yet)
 %bcond_with	dietlibc
 %else
