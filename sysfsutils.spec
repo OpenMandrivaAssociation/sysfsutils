@@ -1,3 +1,5 @@
+%global optflags %{optflags} -Oz
+
 %define fname sysfs
 %define major 2
 %define libname %mklibname %{fname} %{major}
@@ -7,7 +9,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	42
+Release:	43
 URL:		http://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 Source1:	%{name}.rpmlintrc
@@ -75,17 +77,12 @@ autoreconf -fi -Im4
 
 %build
 %configure \
-	--libdir=/%{_lib} \
 	--enable-static
 
 %make_build
 
 %install
 %make_install
-
-install -d %{buildroot}%{_libdir}
-mv %{buildroot}/%{_lib}/*.{so,a} %{buildroot}%{_libdir}
-ln -rsf %{buildroot}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsysfs.so
 
 %files
 %doc AUTHORS README NEWS
@@ -94,11 +91,10 @@ ln -rsf %{buildroot}/%{_lib}/libsysfs.so.%{major}.* %{buildroot}%{_libdir}/libsy
 %{_bindir}/get_device
 %{_bindir}/get_driver
 %{_bindir}/get_module
-#%{_bindir}/testlibsysfs
-%{_mandir}/man1/*
+%doc %{_mandir}/man1/*
 
 %files -n %{libname}
-/%{_lib}/libsysfs.so.%{major}*
+%{_libdir}/libsysfs.so.%{major}*
 
 %files -n %{devname}
 %doc docs/libsysfs.txt
