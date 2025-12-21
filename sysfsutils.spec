@@ -19,6 +19,11 @@ Patch0:		sysfsutils-2.0.0-class-dup.patch
 Patch1:		sysfsutils-2.1.0-get_link.patch
 Patch2:		sysfsutils-2.1.0-srcdir-include.patch
 Patch3:		sysfsutils-automake-1.13.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	glibc-devel
 
 %description
