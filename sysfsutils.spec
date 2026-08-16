@@ -9,7 +9,7 @@
 Summary:	Utility suite to enjoy sysfs
 Name:		sysfsutils
 Version:	2.1.0
-Release:	44
+Release:	45
 URL:		https://linux-diag.sourceforge.net/
 Source0:	http://prdownloads.sourceforge.net/linux-diag/%{name}-%{version}.tar.bz2
 Source1:	%{name}.rpmlintrc
@@ -84,10 +84,10 @@ autoreconf -fi -Im4
 %configure \
 	--enable-static
 
-%make_build
+%make_build LIBTOOL=slibtool
 
 %install
-%make_install
+%make_install LIBTOOL=slibtool
 
 %files
 %doc AUTHORS README NEWS
